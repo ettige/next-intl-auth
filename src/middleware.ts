@@ -22,13 +22,28 @@ const authMiddleware = withAuth(
         }
     }
 );
-export default function middleware(req: NextRequest) {
+export default async function middleware(req: NextRequest) {
     const publicPathnameRegex = RegExp(
         `^(/(${i18nConfig.locales.join('|')}))?(${publicPages.join('|')})?/?$`,
         'i'
     );
     const isPublicPage = publicPathnameRegex.test(req.nextUrl.pathname);
+    const ip = req.headers.get("x-forwarded-for");
 
+    if (!req.cookies.get("NEXT_LOCALE")?.value) {
+        const ip2c = await fetch(`https://ip2c.org/${ip}`)
+            .then(response => response.text())
+            .then(data => {
+                const responseParts = data.split(';');
+                const countryCode = responseParts[1];
+                const countryName = responseParts[3];
+                if (i18nConfig.locales.includes(countryCode.toLowerCase()))
+                    req.cookies.set("NEXT_LOCALE", countryCode)
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
     if (isPublicPage) {
         return intlMiddleware(req);
     } else {
