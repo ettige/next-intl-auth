@@ -14,11 +14,29 @@ const Root = async ({
   const session = await getServerSession(authOptions);
 
   return (
-    <main className="flex h-screen justify-center flex-col items-center">
+    <main className="flex h-screen justify-center gap-1 flex-col items-center">
+      {
+        session ?
+          <div className="rounded-lg p-4 bg-gray-200 flex flex-col gap-1 items-center">
+            <figure className="rounded-xl w-56">
+              <img src={session.user?.image || ""} alt="User-Image" />
+            </figure>
+            <h2>{session.user?.name}</h2>
+            <p>{session.user?.email}</p>
+            <SignOut>
+              {t("signout")}
+            </SignOut>
+          </div> :
+          <Link
+            className="bg-lime-700 px-3 hover:bg-lime-800 transition-colors text-white p-2 text-center rounded-md"
+            href={"/signin"}>{t("signin")}</Link>
+      }
       <h1 className="font-bold text-lg">{t("appName")}</h1>
       <p>{t("appDesc")}</p>
       <LocaleSwitcher />
-      {session ? <div className="flex gap-1">{session.user?.name}<SignOut> {t("signout")}</SignOut> </div> : <Link href={"/signin"}>{t("signin")}</Link>}
+
+
+
     </main>
   );
 }
