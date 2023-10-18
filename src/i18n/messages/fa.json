@@ -1,0 +1,19 @@
+{
+    "Root": {
+        "appName": "next-intl-auth",
+        "appDesc": "Next.js Integration with next-intl and next-auth",
+        "signout": "خروج",
+        "signin": "ورود"
+    },
+    "Signin": {
+        "github": "گیت هاب",
+        "oauthTitle": "ورود با 0auth"
+    },
+    "LocaleSwitcher": {
+        "switch-to": "تغییر زبان به {locale}"
+    },
+    "metadata": {
+        "title": "Create Next App",
+        "desc": "ساخته شده توسط Create next app"
+    }
+}
