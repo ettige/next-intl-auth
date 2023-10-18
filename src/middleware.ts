@@ -1,5 +1,5 @@
 import createMiddleware from 'next-intl/middleware';
-import { i18nConfig } from './i18n';
+import { countryTolocale, i18nConfig } from './i18n';
 import withAuth from 'next-auth/middleware';
 import { NextRequest } from 'next/server';
 
@@ -37,7 +37,7 @@ export default async function middleware(req: NextRequest) {
                 const responseParts = data.split(';');
                 const countryCode = responseParts[1];
                 const countryName = responseParts[3];
-                if (i18nConfig.locales.includes(countryCode.toLowerCase()))
+                if (i18nConfig.locales.includes(countryTolocale[countryCode.toLowerCase()]))
                     req.cookies.set("NEXT_LOCALE", countryCode)
             })
             .catch(error => {

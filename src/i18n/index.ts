@@ -5,7 +5,11 @@ export const i18nConfig = {
     defaultLocale: "fa"
 }
 //add languages that are rtl here
-export const rtlLanguages=["fa"];
+export const rtlLanguages = ["fa"];
+export const countryTolocale: { [key: string]: string } = {
+    "ir": "fa",
+    "us": "en",
+}
 export const getMessages = async (locale: string) => (await import(`./messages/${locale}.json`)).default;
 
 export default getRequestConfig(async ({ locale }) => ({
