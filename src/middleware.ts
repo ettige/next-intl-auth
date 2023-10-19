@@ -37,6 +37,7 @@ export default async function middleware(req: NextRequest) {
                 const responseParts = data.split(';');
                 const countryCode = responseParts[1];
                 const countryName = responseParts[3];
+                console.log(data)
                 if (i18nConfig.locales.includes(countryTolocale[countryCode.toLowerCase()]))
                     req.cookies.set("NEXT_LOCALE", countryCode)
             })

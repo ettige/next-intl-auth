@@ -1,4 +1,4 @@
-import '../globals.css'
+import '@/styles/globals.css'
 import { i18nConfig, rtlLanguages } from '@/i18n'
 
 import { Vazirmatn } from 'next/font/google'
