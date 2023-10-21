@@ -1,7 +1,7 @@
 const Secure = () => {
     return (
         <main>
-            some secure page;
+            some secure page;a
         </main>
     );
 }
