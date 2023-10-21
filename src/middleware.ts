@@ -15,7 +15,16 @@ const authMiddleware = withAuth(
     },
     {
         callbacks: {
-            authorized: ({ token }) => token != null
+            authorized: async ({ req: { cookies }, token }) => {
+                if (token != null) {
+                    return true;
+                }
+                //see https://stackoverflow.com/questions/76496259/how-to-secure-routes-using-next-auth-and-middleware-with-database-strategy
+                const secureCookie = process.env.NEXTAUTH_URL?.startsWith("https://") ?? !!process.env.VERCEL;
+                const cookieName = secureCookie ? "__Secure-next-auth.session-token" : "next-auth.session-token";
+                const session = await (await fetch(process.env.NEXTAUTH_URL + '/api/auth/session', { method: 'GET', headers: { 'Cookie': `${cookieName}=${cookies.get(cookieName)?.value}` } })).json();
+                return !!session.user;
+            }
         },
         pages: {
             signIn: '/signin'
@@ -37,7 +46,7 @@ export default async function middleware(req: NextRequest) {
                 const responseParts = data.split(';');
                 const countryCode = responseParts[1];
                 const countryName = responseParts[3];
-                console.log(data)
+                console.log(countryCode)
                 if (i18nConfig.locales.includes(countryTolocale[countryCode.toLowerCase()]))
                     req.cookies.set("NEXT_LOCALE", countryCode)
             })

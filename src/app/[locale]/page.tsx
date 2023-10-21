@@ -15,6 +15,11 @@ const Root = async ({
 
   return (
     <main className="flex h-screen justify-center gap-1 flex-col items-center">
+      <Link
+        href={"/secure"}
+      >
+        Secure
+      </Link>
       {
         session ?
           <div className="rounded-lg p-4 bg-gray-200 flex flex-col gap-1 items-center">
@@ -34,8 +39,6 @@ const Root = async ({
       <h1 className="font-bold text-lg">{t("appName")}</h1>
       <p>{t("appDesc")}</p>
       <LocaleSwitcher />
-
-
 
     </main>
   );
